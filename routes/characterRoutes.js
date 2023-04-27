@@ -1,53 +1,38 @@
 const express = require("express");
-const  db  = require("../mockdb");
-
+const character = require("../controllers/character.controller")
 const router = express.Router();
 
-router.get("/character?", async (req, res, next) => {
-  try {
+router.get("/:id?", async (req, res, next) => {
     let { name } = req.params;
     let data;
-    if (name){
-        data = await db.getOne(name)
+  
+    if (name) {
+      data = await character.findOne(name);
+    } else {
+      data = await character.findAll();
     }
-    else{
-        data = await db.getAll();
-    }
-    res.json(data)
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post("/", async (req, res, next) => {
-  try {
-    let newCharacter = req.body;
-    let data = await db.add(newCharacter);
+  
     res.json(data);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.put("/:id", async (req, res, next) => {
-  try {
-    let { name } = req.params;
-    let updatedCharacter = req.body;
-    let data = await db.update(id,updatedCharacter);
+  });
+  
+  router.post("/", async (req, res, next) => {
+    let characterID = req.body;
+    let data = await character.addOne(characterID);
     res.json(data);
-  } catch (error) {
-    next(error);
-  }
-});
+  });
+  
+  router.put("/:id", async (req, res, next) => {
+    let { id } = req.params;
+    let characterID = req.body;
+    let data = await character.updateOne(id, characterID);
+    res.json(data);
+  });
+  
+  router.delete("/:id", async (req, res, next) => {
+    let { id } = req.params;
+    let data = await character.removeOne(id);
+    res.json(data);
+  });
+  
 
-router.delete("/:id", async (req, res, next) => {
-  try {
-    let { name } = req.params;
-    let data = await db.remove(name);
-    res.json(data)
-  } catch (error) {
-    next(error);
-  }
-});
-
-module.exports = router;
+module.exports =  router  ;

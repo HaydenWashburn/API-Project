@@ -9,4 +9,4 @@ const query = (qryStr, values) => {
   });
 };
 
-export default query;
+module.exports = query;

@@ -4,9 +4,9 @@ const findAll = async () => {
   return query("SELECT name, age, class, weapon FROM characters");
 };
 
-const findOne = async (id) => {
+const findOne = async (name) => {
   return query("SELECT name, age, class, weapon FROM characters WHERE name = ?", [
-    id,
+    name,
   ]);
 };
 
@@ -14,15 +14,15 @@ const addOne = async (character) => {
   return await query("INSERT INTO characters SET ?", [character]);
 };
 
-const updateOne = async (id, employee) => {
+const updateOne = async (name, character) => {
   return await query("UPDATE characters SET ? WHERE name = ?", [
-    employee,
-    id,
+    character,
+    name,
   ]);
 };
 
-const removeOne = async (id) => {
-  return await query("DELETE FROM characters WHERE name = ?", [id]);
+const removeOne = async (character) => {
+  return await query("DELETE FROM characters WHERE name = ?", [character]);
 };
 
 module.exports = {
