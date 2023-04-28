@@ -10,6 +10,10 @@ const logger = async (req, res, next) => {
 
     try{
         const queryres = await query(`INSERT INTO Logs ?;`, [values] )
+        if (queryres){
+            console.log("Affected Rows:", queryres.affectedRows);
+        }
+        next();
     }
     catch(err){
         console.error(err);
@@ -17,3 +21,4 @@ const logger = async (req, res, next) => {
     }
 }
 
+module.exports = logger;

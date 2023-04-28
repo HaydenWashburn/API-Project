@@ -11,7 +11,7 @@ app.use(express.json());
 
  app.use('/', router);
 
-// app.use();
+app.use(logger);
 
 app.use((err, req, res, next) => {
   console.error(err);
